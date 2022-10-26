@@ -1,24 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
+import Todoist from './pages/todoist/Todoist';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-function App() {
+function App ()
+{
+  const [todo, setTodo] = useState([]);
+  let [isLoading, setIsLoading] = useState(true);
+
+  const fetchTodos = async () =>
+  {
+    const response = await axios.get("/todos");
+    let { data } = response;
+
+    setTodo(data.data);
+    setIsLoading(false);
+  };
+
+  useEffect(() =>
+  {
+    //Invoke fetch
+    fetchTodos();
+
+  }, []);
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Todoist todo={ todo } isLoading={ isLoading } fetchTodos={ fetchTodos } settodo={ setTodo } />
+    </>
   );
 }
 
