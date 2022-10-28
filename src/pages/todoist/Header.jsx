@@ -1,7 +1,16 @@
 import Board from '@iconscout/react-unicons/icons/uil-clipboard-notes';
 import { Button } from './Button';
 
-const Header = ({ todoText, setTodoText, add }) => {
+const Header = ({
+  todoText,
+  todoUpdateId,
+  completeState,
+  setTodoText,
+  updateTodo,
+  add,
+  editState,
+  setEditState,
+}) => {
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       add();
@@ -22,8 +31,21 @@ const Header = ({ todoText, setTodoText, add }) => {
         />
       </div>
       <div id='edit-btns'>
-        <Button text='Update' updateBtn />
-        <Button text='Cancel' cancelBtn />
+        <Button
+          text='Update'
+          onclick={() => updateTodo(todoUpdateId, todoText, completeState)}
+          editState={editState}
+          updateBtn
+        />
+        <Button
+          text='Cancel'
+          editState={editState}
+          onclick={() => {
+            setEditState(false);
+            setTodoText('');
+          }}
+          cancelBtn
+        />
       </div>
     </div>
   );

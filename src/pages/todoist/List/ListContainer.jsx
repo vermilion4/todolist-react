@@ -1,8 +1,16 @@
 import { List } from './List';
 import Loader from '../Loader';
 
-const ListContainer = ({ todos, settodos, isLoading, fetchTodos }) => {
+const ListContainer = ({
+  todos,
+  settodos,
+  edit,
+  isLoading,
+  fetchTodos,
+  updateTodo,
+}) => {
   // console.log(todos);
+
   return (
     <ul className='task-box'>
       {isLoading && <Loader />}
@@ -13,10 +21,12 @@ const ListContainer = ({ todos, settodos, isLoading, fetchTodos }) => {
         return (
           <List
             todo={todo}
+            edit={edit}
             todos={todos}
             key={todo.id}
             fetchTodos={fetchTodos}
             settodos={settodos}
+            updateTodo={updateTodo}
           />
         );
       })}

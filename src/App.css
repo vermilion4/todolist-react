@@ -6,11 +6,29 @@
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
+a {
+  text-decoration: none;
+}
 body {
   width: 100%;
   height: 100vh;
   overflow: hidden;
   background: linear-gradient(135deg, #2e2f30, #0d0d0d);
+}
+.Todoist-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Todolist {
+  color: #fff;
+  cursor: pointer;
+  font-size: 50px;
+  transition: all ease-in-out 0.3s;
+}
+.Todolist:hover {
+  color: rgb(138, 14, 14);
 }
 ::selection {
   color: #fff;
@@ -80,16 +98,16 @@ li {
   padding: 18px 25px;
   border-bottom: 1px solid #ccc;
 }
-.filters span {
+.filters .span {
   margin: 0 8px;
   font-size: 17px;
   color: #444444;
   cursor: pointer;
 }
-.filters span:first-child {
+.filters .span:first-child {
   margin-left: 0;
 }
-.filters span.active {
+.filters .span.active {
   color: rgb(162, 64, 64);
 }
 .btn {
@@ -123,6 +141,10 @@ li {
     rgb(15, 60, 184) 0%,
     rgb(6, 20, 101) 100%
   );
+}
+.cancel-btn.show,
+.update-btn.show {
+  display: block;
 }
 .clear-btn.active {
   opacity: 0.9;

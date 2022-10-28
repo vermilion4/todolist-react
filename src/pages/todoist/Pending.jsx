@@ -1,45 +1,23 @@
-// const addTodo = () => {
-//   const newTodo = {
-//     _id: crypto.randomUUID(),
-//     title: todoText,
-//     isComplete: false,
-//   };
-//   const updatedTodo = [newTodo, ...todo];
-//   settodo(updatedTodo);
-// };
 import React from 'react';
 import Header from './Header';
 import Controls from './Controls';
 import ListContainer from './List/ListContainer';
-import { useState } from 'react';
-import axios from 'axios';
 
-const Todoist = ({
+const Pending = ({
   todo,
-  settodo,
   isLoading,
+  updateTodo,
   fetchTodos,
   editTodo,
+  settodo,
   todoText,
+  setTodoText,
   editState,
-  updateTodo,
   todoUpdateId,
   completeState,
-  setTodoText,
   setEditState,
 }) => {
-  const addTodoItem = async () => {
-    await axios
-      .post('/add', `title=${todoText}`)
-      .then((response) => {
-        console.log(response);
-        setTodoText('');
-        fetchTodos();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  const pendingTodo = todo.filter((item) => item.isComplete === false);
 
   return (
     <React.Fragment>
@@ -53,17 +31,15 @@ const Todoist = ({
           todoUpdateId={todoUpdateId}
           completeState={completeState}
           setEditState={setEditState}
-          add={addTodoItem}
         />
         <Controls />
         <ListContainer
-          todos={todo}
+          todos={pendingTodo}
+          isLoading={isLoading}
+          updateTodo={updateTodo}
           fetchTodos={fetchTodos}
           edit={editTodo}
           settodos={settodo}
-          todoUpdateId={todoUpdateId}
-          updateTodo={updateTodo}
-          isLoading={isLoading}
         />
       </div>
       <footer>UI Credit: CodingNepal</footer>
@@ -71,4 +47,4 @@ const Todoist = ({
   );
 };
 
-export default Todoist;
+export default Pending;

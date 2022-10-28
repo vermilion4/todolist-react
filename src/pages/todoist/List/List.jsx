@@ -4,19 +4,15 @@ import { useState } from 'react';
 import axios from 'axios';
 
 export const List = (props) => {
-  const { todo, fetchTodos } = props;
+  const { todo, fetchTodos, edit, updateTodo } = props;
 
   let { id, title, isComplete } = todo;
-  const [click, setClick] = useState(isComplete);
-  function handleClick() {
-    setClick(!click);
-  }
-  isComplete = click;
+  let [isTodoCompleted, setIsTodoCompleted] = useState(isComplete);
 
   //delete axios
   const deleteTodoItem = async (id) => {
     axios
-      .post(`/delete/${id}`)
+      .delete(`/delete/${id}`)
       .then((response) => {
         console.log(response);
         fetchTodos();
@@ -36,14 +32,20 @@ export const List = (props) => {
     <li className='task'>
       <label htmlFor={id}>
         <input
-          onChange={handleClick}
+          onChange={async () => {
+            await updateTodo(id, title, !isTodoCompleted).then(() =>
+              setIsTodoCompleted(!isTodoCompleted)
+            );
+
+            fetchTodos();
+          }}
           type='checkbox'
           id={id}
-          checked={isComplete}
+          checked={isTodoCompleted}
         />
-        <p className={isComplete ? 'checked' : ''}>{title}</p>
+        <p className={isTodoCompleted ? 'checked' : ''}>{title}</p>
       </label>
-      <SettingsContainer id={id} deleteTodo={deleteTodoItem} />
+      <SettingsContainer id={id} edit={edit} deleteTodo={deleteTodoItem} />
     </li>
   );
 };

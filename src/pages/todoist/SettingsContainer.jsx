@@ -12,14 +12,13 @@ const Settings = ({ component, text, func, id }) => {
   );
 };
 
-const SettingsContainer = ({ deleteTodo, id }) => {
+const SettingsContainer = ({ deleteTodo, id, edit }) => {
   const [show, setShow] = useState(false);
-
   return (
     <div className='settings'>
       <Ellipsis id='ellipsis' onClick={() => setShow(!show)} />
       <ul className={`task-menu ${show ? 'show' : ''}`}>
-        <Settings component={<Edit />} text='Edit' />
+        <Settings id={id} func={edit} component={<Edit />} text='Edit' />
         <Settings
           func={deleteTodo}
           id={id}

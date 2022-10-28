@@ -1,10 +1,17 @@
-export const Button = ({ clearBtn, updateBtn, cancelBtn, text, func }) => {
+export const Button = ({
+  clearBtn,
+  updateBtn,
+  cancelBtn,
+  text,
+  onclick,
+  editState,
+}) => {
   return (
     <button
-      onClick={() => func()}
+      onClick={onclick}
       className={`${clearBtn && 'btn clear-btn'} ${
-        updateBtn && 'btn update-btn'
-      } ${cancelBtn && 'btn cancel-btn'}`}>
+        updateBtn && `btn update-btn ${editState && 'show'}`
+      } ${cancelBtn && `btn cancel-btn ${editState && 'show'}`}`}>
       {text}
     </button>
   );
