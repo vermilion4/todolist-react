@@ -1,19 +1,10 @@
-// const addTodo = () => {
-//   const newTodo = {
-//     _id: crypto.randomUUID(),
-//     title: todoText,
-//     isComplete: false,
-//   };
-//   const updatedTodo = [newTodo, ...todo];
-//   settodo(updatedTodo);
-// };
 import React from 'react';
 import Header from './Header';
 import Controls from './Controls';
 import ListContainer from './List/ListContainer';
-import { useState } from 'react';
 import axios from 'axios';
 
+// Content rendered on /all path
 const Todoist = ({
   todo,
   settodo,
@@ -28,6 +19,7 @@ const Todoist = ({
   setTodoText,
   setEditState,
 }) => {
+  // Add function
   const addTodoItem = async () => {
     await axios
       .post('/add', `title=${todoText}`)
@@ -44,7 +36,7 @@ const Todoist = ({
   return (
     <React.Fragment>
       <div className='wrapper'>
-        <h3 id='edit-mode-text' className={editState && 'show'}>
+        <h3 id='edit-mode-text' className={editState ? 'show' : null}>
           You are in Edit Mode!
         </h3>
         <Header

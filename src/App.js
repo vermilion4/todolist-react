@@ -46,12 +46,29 @@ function App ()
     await axios.post(
       '/edit',
       `id=${ id }&title=${ titleText }&isComplete=${ complete }`
-    ).then(() =>
+    ).then(async () =>
     {
-      fetchTodos();
-      setEditState(false);
-      setTodoText('');
-    });
+      await fetchTodos();
+    })
+      .then(() =>
+      {
+        setEditState(false);
+        setTodoText('');
+      });
+
+    // const updatedTodo = { id, titleText, complete };
+    // await axios.post(
+    //   '/edit',
+    //   updatedTodo,
+    //   {
+    //     headers: {
+    //       "Content-Type": "application/json"
+    //     }
+    //   }
+    // );
+    // fetchTodos();
+    // setEditState(false);
+    // setTodoText('');
   };
 
 
