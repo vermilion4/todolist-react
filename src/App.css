@@ -42,11 +42,15 @@ body {
   border-radius: 7px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
-h3 {
+#edit-mode-text {
   margin-left: 20px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   display: none;
 }
+#edit-mode-text.show {
+  display: block;
+}
+
 .head-section {
   display: flex;
   align-items: center;

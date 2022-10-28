@@ -44,7 +44,9 @@ const Todoist = ({
   return (
     <React.Fragment>
       <div className='wrapper'>
-        <h3 id='edit-mode-text'>You are in Edit Mode!</h3>
+        <h3 id='edit-mode-text' className={editState && 'show'}>
+          You are in Edit Mode!
+        </h3>
         <Header
           todoText={todoText}
           setTodoText={setTodoText}
