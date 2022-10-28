@@ -1,10 +1,10 @@
 import './App.css';
-import Todoist from './pages/todoist/Todoist';
+import Todoist from './Views/Todoist';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Route, BrowserRouter as Router, Routes, Link } from 'react-router-dom';
-import Pending from './pages/todoist/Pending';
-import Completed from './pages/todoist/Completed';
+import Pending from './Views/Pending';
+import Completed from './Views/Completed';
 
 function App ()
 {
@@ -14,12 +14,15 @@ function App ()
   const [editState, setEditState] = useState(false);
   let [todoUpdateId, setTodoUpdateId] = useState('');
   let [completeState, setCompleteState] = useState(false);
+  const [clearBtnState, setClearBtnState] = useState(false);
 
   const fetchTodos = async () =>
   {
     const response = await axios.get("/todos");
     let { data } = response;
 
+    // check if any record to make clear all btn active
+    data.data.length > 0 ? setClearBtnState(true) : setClearBtnState(false);
     setTodo(data.data);
     setIsLoading(false);
   };
@@ -76,9 +79,9 @@ function App ()
     <Router>
       <Routes>
         <Route path='/' element={ <div className='Todoist-container'><Link to={ '/all' } className='Todolist'>Go to Todolist</Link></div> }></Route>
-        <Route path='/all' element={ <Todoist editTodo={ editTodo } updateTodo={ updateTodo } todoText={ todoText } completeState={ completeState } setTodoText={ setTodoText } todoUpdateId={ todoUpdateId } editState={ editState } todo={ todo } isLoading={ isLoading } fetchTodos={ fetchTodos } settodo={ setTodo } setEditState={ setEditState } /> }></Route>
-        <Route path='/pending' element={ <Pending todo={ todo } isLoading={ isLoading } editTodo={ editTodo } updateTodo={ updateTodo } todoText={ todoText } completeState={ completeState } setTodoText={ setTodoText } todoUpdateId={ todoUpdateId } editState={ editState } fetchTodos={ fetchTodos } settodo={ setTodo } setEditState={ setEditState } /> }></Route>
-        <Route path='/completed' element={ <Completed todo={ todo } isLoading={ isLoading } editTodo={ editTodo } updateTodo={ updateTodo } todoText={ todoText } completeState={ completeState } setTodoText={ setTodoText } todoUpdateId={ todoUpdateId } editState={ editState } fetchTodos={ fetchTodos } settodo={ setTodo } setEditState={ setEditState } /> }></Route>
+        <Route path='/all' element={ <Todoist editTodo={ editTodo } updateTodo={ updateTodo } todoText={ todoText } completeState={ completeState } setTodoText={ setTodoText } todoUpdateId={ todoUpdateId } editState={ editState } todo={ todo } isLoading={ isLoading } setIsLoading={ setIsLoading } fetchTodos={ fetchTodos } settodo={ setTodo } setEditState={ setEditState } clearBtnState={ clearBtnState } /> }></Route>
+        <Route path='/pending' element={ <Pending todo={ todo } isLoading={ isLoading } editTodo={ editTodo } updateTodo={ updateTodo } todoText={ todoText } completeState={ completeState } setTodoText={ setTodoText } todoUpdateId={ todoUpdateId } editState={ editState } fetchTodos={ fetchTodos } settodo={ setTodo } setEditState={ setEditState } clearBtnState={ clearBtnState } /> }></Route>
+        <Route path='/completed' element={ <Completed todo={ todo } isLoading={ isLoading } editTodo={ editTodo } updateTodo={ updateTodo } todoText={ todoText } completeState={ completeState } setTodoText={ setTodoText } todoUpdateId={ todoUpdateId } editState={ editState } fetchTodos={ fetchTodos } settodo={ setTodo } setEditState={ setEditState } clearBtnState={ clearBtnState } /> }></Route>
       </Routes>
     </Router>
   );

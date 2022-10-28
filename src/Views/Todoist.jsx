@@ -1,14 +1,16 @@
 import React from 'react';
-import Header from './Header';
-import Controls from './Controls';
-import ListContainer from './List/ListContainer';
+import Header from '../Components/Header';
+import Controls from '../Components/Controls';
+import ListContainer from '../List/ListContainer';
 import axios from 'axios';
+import { useState } from 'react';
 
 // Content rendered on /all path
 const Todoist = ({
   todo,
   settodo,
   isLoading,
+  setIsLoading,
   fetchTodos,
   editTodo,
   todoText,
@@ -18,16 +20,19 @@ const Todoist = ({
   completeState,
   setTodoText,
   setEditState,
+  clearBtnState,
 }) => {
+  const [isInputDisabled, setIsInputDisabled] = useState(false);
   // Add function
   const addTodoItem = async () => {
+    setIsInputDisabled(true);
     await axios
       .post('/add', `title=${todoText}`)
-      .then((response) => {
-        console.log(response);
+      .then(async () => {
         setTodoText('');
-        fetchTodos();
+        await fetchTodos();
       })
+      .then(() => setIsInputDisabled(false))
       .catch((error) => {
         console.log(error);
       });
@@ -48,8 +53,13 @@ const Todoist = ({
           completeState={completeState}
           setEditState={setEditState}
           add={addTodoItem}
+          isInputDisabled={isInputDisabled}
         />
-        <Controls />
+        <Controls
+          clearBtnState={clearBtnState}
+          fetchTodos={fetchTodos}
+          setIsLoading={setIsLoading}
+        />
         <ListContainer
           todos={todo}
           fetchTodos={fetchTodos}
@@ -58,6 +68,8 @@ const Todoist = ({
           todoUpdateId={todoUpdateId}
           updateTodo={updateTodo}
           isLoading={isLoading}
+          isInputDisabled={isInputDisabled}
+          setIsInputDisabled={setIsInputDisabled}
         />
       </div>
       <footer>UI Credit: CodingNepal</footer>

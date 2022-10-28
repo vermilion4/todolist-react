@@ -10,6 +10,7 @@ const Header = ({
   add,
   editState,
   setEditState,
+  isInputDisabled,
 }) => {
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
@@ -20,6 +21,7 @@ const Header = ({
   return (
     <div className='head-section'>
       <div className='task-input'>
+        <p className={editState || 'show'}>Press Enter to add a new todo</p>
         <Board className='img' />
         <input
           id='todo-input'
@@ -28,23 +30,22 @@ const Header = ({
           value={todoText}
           onKeyDown={handleKeyDown}
           placeholder='Add a new task'
+          disabled={isInputDisabled}
         />
       </div>
       <div id='edit-btns'>
         <Button
           text='Update'
           onclick={() => updateTodo(todoUpdateId, todoText, completeState)}
-          editState={editState}
-          updateBtn
+          classname={`btn update-btn ${editState && 'show'}`}
         />
         <Button
           text='Cancel'
-          editState={editState}
           onclick={() => {
             setEditState(false);
             setTodoText('');
           }}
-          cancelBtn
+          classname={`btn cancel-btn ${editState && 'show'}`}
         />
       </div>
     </div>

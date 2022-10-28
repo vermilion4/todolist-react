@@ -1,11 +1,13 @@
 import React from 'react';
-import Header from './Header';
-import Controls from './Controls';
-import ListContainer from './List/ListContainer';
+import Header from '../Components/Header';
+import Controls from '../Components/Controls';
+import ListContainer from '../List/ListContainer';
 
-const Completed = ({
+const Pending = ({
   todo,
   isLoading,
+  clearBtnState,
+  setIsLoading,
   updateTodo,
   fetchTodos,
   editTodo,
@@ -16,8 +18,10 @@ const Completed = ({
   todoUpdateId,
   completeState,
   setEditState,
+  isInputDisabled,
 }) => {
-  const completeTodo = todo.filter((item) => item.isComplete === true);
+  const pendingTodo = todo.filter((item) => item.isComplete === false);
+
   return (
     <React.Fragment>
       <div className='wrapper'>
@@ -30,10 +34,15 @@ const Completed = ({
           todoUpdateId={todoUpdateId}
           completeState={completeState}
           setEditState={setEditState}
+          isInputDisabled={isInputDisabled}
         />
-        <Controls />
+        <Controls
+          clearBtnState={clearBtnState}
+          fetchTodos={fetchTodos}
+          setIsLoading={setIsLoading}
+        />
         <ListContainer
-          todos={completeTodo}
+          todos={pendingTodo}
           isLoading={isLoading}
           updateTodo={updateTodo}
           fetchTodos={fetchTodos}
@@ -46,4 +55,4 @@ const Completed = ({
   );
 };
 
-export default Completed;
+export default Pending;

@@ -68,6 +68,15 @@ body {
   padding: 0 0;
   position: relative;
 }
+.task-input p {
+  display: none;
+}
+.task-input p.show {
+  display: block;
+}
+.task-input p.show + .img {
+  top: 95%;
+}
 .task-input .img {
   top: 50%;
   position: absolute;
@@ -161,6 +170,8 @@ li {
   margin-top: 20px;
   margin-right: 5px;
   padding: 0 20px 10px 25px;
+  overflow-y: auto;
+  max-height: 200px;
 }
 #no-task {
   opacity: 0.5;
@@ -169,10 +180,7 @@ li {
   justify-content: center;
   padding-top: 2rem;
 }
-.task-box.overflow {
-  overflow-y: auto;
-  max-height: 200px;
-}
+
 .task-box::-webkit-scrollbar {
   width: 5px;
 }

@@ -1,10 +1,16 @@
-import SettingsContainer from '../SettingsContainer';
-// import Todoist from '../Todoist';
+import SettingsContainer from '../Components/SettingsContainer';
 import { useState } from 'react';
 import axios from 'axios';
 
 export const List = (props) => {
-  const { todo, fetchTodos, edit, updateTodo } = props;
+  const {
+    todo,
+    fetchTodos,
+    edit,
+    updateTodo,
+    isInputDisabled,
+    setIsInputDisabled,
+  } = props;
 
   let { id, title, isComplete } = todo;
   let [isTodoCompleted, setIsTodoCompleted] = useState(isComplete);
@@ -22,26 +28,23 @@ export const List = (props) => {
       });
   };
 
-  //Delete Todo
-  // const deleteTodo = (todoId) => {
-  //   const updatedTodo = todos.filter(({ id }) => id !== todoId);
-  //   settodos(updatedTodo);
-  // };
-
   return (
     <li className='task'>
       <label htmlFor={id}>
         <input
           onChange={async () => {
+            setIsInputDisabled(true);
             await updateTodo(id, title, !isTodoCompleted).then(() =>
               setIsTodoCompleted(!isTodoCompleted)
             );
 
             fetchTodos();
+            setIsInputDisabled(false);
           }}
           type='checkbox'
           id={id}
           checked={isTodoCompleted}
+          disabled={isInputDisabled}
         />
         <p className={isTodoCompleted ? 'checked' : ''}>{title}</p>
       </label>
